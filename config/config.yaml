@@ -1,0 +1,108 @@
+# 市场情报分析系统配置
+# Market Intelligence System Configuration
+
+# 系统设置
+system:
+  name: "市场情报分析系统"
+  version: "1.0.0"
+  debug: false
+  log_level: INFO
+  timezone: "Asia/Shanghai"
+
+# 数据采集配置
+data_collection:
+  # A股数据源
+  a_share:
+    enabled: true
+    tushare_token: "${TUSHARE_TOKEN}"
+    update_interval: 300  # 秒
+    
+  # 黄金数据源
+  gold:
+    enabled: true
+    sources:
+      - yahoo_finance
+      - jin10
+    update_interval: 600
+    
+  # 数字货币数据源
+  crypto:
+    enabled: true
+    exchanges:
+      - binance
+      - okx
+    symbols:
+      - BTC/USDT
+      - ETH/USDT
+    update_interval: 60
+    
+  # 国债数据源
+  bond:
+    enabled: true
+    sources:
+      - china_bond
+      - fred
+    update_interval: 3600
+
+# 分析引擎配置
+analysis:
+  sentiment:
+    enabled: true
+    model: "default"
+    
+  anomaly_detection:
+    enabled: true
+    sensitivity: 0.05  # 异常检测敏感度
+    
+  trend_prediction:
+    enabled: true
+    lookback_days: 30
+    forecast_days: 5
+
+# 监控预警配置
+monitoring:
+  enabled: true
+  check_interval: 60  # 检查间隔（秒）
+  
+  alerts:
+    # 价格波动预警
+    price_change:
+      enabled: true
+      threshold_pct: 5  # 5%以上变动预警
+      
+    # 成交量异常
+    volume_anomaly:
+      enabled: true
+      threshold_std: 3  # 3倍标准差
+      
+    # 情绪极端值
+    sentiment_extreme:
+      enabled: true
+      threshold: 0.8  # 情绪指数超过0.8或低于0.2预警
+
+# 可视化配置
+visualization:
+  dashboard:
+    enabled: true
+    port: 8501
+    host: "0.0.0.0"
+    refresh_interval: 30
+
+# 数据存储
+database:
+  type: sqlite  # sqlite / postgresql
+  path: "data/market_intelligence.db"
+  # PostgreSQL 配置（如使用）
+  # host: localhost
+  # port: 5432
+  # user: user
+  # password: password
+  # database: market_intelligence
+
+# 报告生成
+reporting:
+  auto_generate: true
+  schedule: "0 9,15 * * 1-5"  # 工作日 9:00 和 15:00 生成报告
+  output_format:
+    - text
+    - html
