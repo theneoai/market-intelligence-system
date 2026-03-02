@@ -50,8 +50,11 @@ class AShareCollector:
             # 行业板块
             sectors = await loop.run_in_executor(None, ak.stock_sector_spot)
             
-            # 龙虎榜
-            lhb = await loop.run_in_executor(None, ak.stock_lhb_ggtj_em)
+            # 龙虎榜 (使用备用接口)
+            try:
+                lhb = await loop.run_in_executor(None, ak.stock_lhb_detail_daily_sina)
+            except:
+                lhb = None
             
             data = {
                 'timestamp': datetime.now().isoformat(),
