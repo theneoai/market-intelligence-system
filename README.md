@@ -90,6 +90,80 @@
 | 数字货币 | Binance API, CoinGecko |
 | 国债 | 中国债券信息网, FRED |
 
+## 快速开始
+
+### 1. 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 配置环境变量
+
+复制 `.env.example` 为 `.env` 并填入你的 API Key:
+
+```bash
+cp .env.example .env
+```
+
+编辑 `.env` 文件:
+```
+TUSHARE_TOKEN=your_tushare_token_here
+BINANCE_API_KEY=your_binance_api_key
+FRED_API_KEY=your_fred_api_key
+```
+
+### 3. 快速测试
+
+验证所有模块正常工作:
+
+```bash
+python test_modules.py
+```
+
+### 4. 运行系统
+
+**单次运行模式:**
+```bash
+python main.py --mode once
+```
+
+**持续监控模式:**
+```bash
+python main.py --mode continuous
+```
+
+**启动可视化看板:**
+```bash
+python main.py --mode dashboard
+```
+
+## 项目结构
+
+```
+market-intelligence-system/
+├── config/
+│   └── config.yaml          # 系统配置
+├── src/
+│   ├── data_collection/     # 数据采集模块
+│   │   ├── a_share_collector.py
+│   │   ├── gold_collector.py
+│   │   ├── crypto_collector.py
+│   │   └── bond_collector.py
+│   ├── analysis/            # 分析引擎
+│   │   ├── sentiment_analyzer.py
+│   │   ├── anomaly_detector.py
+│   │   └── trend_predictor.py
+│   ├── monitoring/          # 实时监控
+│   │   └── real_time_monitor.py
+│   └── visualization/       # 可视化
+│       └── dashboard.py
+├── data/                    # 数据存储
+├── logs/                    # 日志文件
+├── main.py                  # 主入口
+└── test_modules.py          # 测试脚本
+```
+
 ## 使用 opencode 开发
 
 opencode 将帮助我们:
